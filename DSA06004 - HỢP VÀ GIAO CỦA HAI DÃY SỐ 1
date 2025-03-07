@@ -1,0 +1,36 @@
+#include <bits/sdtc++.h>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        int n, m;
+        cin >> n >> m;
+        if(n < m){
+            int tmp = n;
+            n = m;
+            m = n;
+        }
+        vector<int> a(n), b(m);
+        set<int> hop;
+        set<int> giao;
+        for(int i = 0; i < n; i++){
+            cin >> a[i];
+            hop.insert(a[i]);
+        }
+        for(int i = 0; i < m; i++){
+            cin >> b[i];
+            if(hop.count(b[i]))
+                giao.insert(b[i]);
+            else hop.insert(b[i]);
+            
+        }
+        for(int x : hop) cout << x << " ";
+        cout << endl;
+        for(int x : giao) cout << x << " ";
+        cout << endl;
+    }
+}
