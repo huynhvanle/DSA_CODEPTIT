@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+int main(){
+    int n;
+    cin >> n;
+    int a[n];
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+    vector<string> v;
+    for(int i = 1; i < n; i++){
+        int id = i - 1;
+        for(int j = i ; j < n; j++){
+            if(a[j] < a[id])
+                id = j;
+        }
+        swap(a[id],a[i - 1]);
+        string s = "";
+        for(int j = 0; j < n; j++){
+            string c = to_string(a[j]);
+            s = s + c + " ";
+        }
+        v.push_back(s);
+    }
+    int st = n - 1;
+    for(auto it = v.rbegin(); it != v.rend(); it++)
+        cout << "Buoc " << st-- << ": " << *it << endl;
+    cout << endl;
+    return 0;
+}
