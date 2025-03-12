@@ -1,0 +1,60 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+        int m, k; cin >> m >> k;
+        vector<ll> a(n), b, c;
+        
+        int st1 = 0, st2 = 0;
+        for(int i = 0; i < n; i++) cin >> a[i];
+        for(int i = 0; i < m; i++){
+            ll x; cin >> x;
+            while(st1 < n && a[st1] < x){
+                st1++;
+            }
+            if(st1 < n && a[st1] == x)
+                b.push_back(x);;
+        } 
+        int dg = 0;
+        for(int i = 0; i < k; i++){
+            ll x; cin >> x;
+            while(st2 < b.size() && b[st2] < x){
+                st2++;
+            }
+            if(st2 < b.size() && b[st2] == x){
+                c.push_back(x);
+                dg = 1;
+            }
+        }
+        if(!dg) cout << -1;
+        else{
+            for(ll x : c)
+                cout << x << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
