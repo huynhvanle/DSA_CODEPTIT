@@ -1,0 +1,50 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+int tinh(int a, int b, char c) {
+    if (c == '+')return a + b;
+    if (c == '-')return a - b;
+    if (c == '*')return a * b;
+    else return a / b;
+}
+int main() {
+    int t;
+    cin >> t;
+    while(t--){
+        string s;
+        cin >> s;
+        stack<int> a;
+        for(char c : s){
+            if(c >= '0' && c <= '9')
+                a.push(c - '0');
+            else{
+                int y = a.top();
+                a.pop();
+                int x = a.top();
+                a.pop();
+                a.push(tinh(x, y, c));
+            }
+            
+        }
+        cout << a.top() << endl;
+    }
+    return 0;
+}
