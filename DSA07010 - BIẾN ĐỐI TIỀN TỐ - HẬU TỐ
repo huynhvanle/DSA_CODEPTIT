@@ -1,0 +1,48 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--){
+        cin.ignore();
+        string s;
+        cin >> s;
+        int cnt = 0;
+        stack<string> A;
+        for(int i = s.size() - 1; i >= 0; i--){
+            if(s[i] >= 65 && s[i] <= 90){
+                A.push(string(1,s[i]));
+            }else{
+                string op1 = A.top();
+                A.pop();
+                string op2 = A.top();
+                A.pop();
+                string bthuc = op1 + op2 + string(1,s[i]);
+                A.push(bthuc);
+            }
+        }
+        cout << A.top() << endl;
+    }
+    return 0;
+}
+
