@@ -1,0 +1,61 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+        int a[n];
+        for(int i = 0; i < n; i++) cin >> a[i];
+        int t[n], g[n];
+        t[0] = 1;
+        g[0] = 1;
+        int res = 1;
+        for(int i = 1; i < n; i++){
+            if(a[i] < a[i - 1]){
+                g[i] = g[i - 1] + 1;
+                t[i] = 1;
+            }else if(a[i] > a[i - 1]){
+                t[i] = t[i - 1] + 1;
+                g[i] = 1;
+            }else{
+                t[i] = 1;
+                g[i] = 1;
+            }
+        }
+        for(int i = 1; i < n - 1 ; i++){
+            if(t[i] > t[i + 1]){
+                if(g[i + 1] > 1){
+                    t[i + 1] = t[i] + 1;
+                }
+            }
+        }
+        for(int i = 0; i < n; i++){
+          res = max({res, t[i], g[i]});
+        }
+        cout << res;
+        cout << endl;
+    }
+    return 0;
+}
+
