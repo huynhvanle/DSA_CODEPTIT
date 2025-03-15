@@ -1,0 +1,54 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+string check(string s){
+    stack<int> a;
+    for(char x : s){
+        if(x != ')' && x != ']' && x != '}')
+            a.push(x);
+        else{
+            if(a.empty())
+                return "NO";
+            else{
+                if(x == ')' && a.top() != '(')
+                    return "NO";
+                else if(x == ']' && a.top() != '[')
+                    return "NO";
+                else if(x == '}' && a.top() != '{')
+                    return "NO";
+                else
+                    a.pop();
+            }
+        }
+    }
+    return "YES";
+}
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        cout << check(s);
+        cout << endl;
+    }
+    return 0;
+}
