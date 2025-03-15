@@ -19,10 +19,7 @@
 using namespace std;
 typedef long long ll;
 typedef double db;
-bool check(char c){
-    if(c == '+' || c == '-' || c == '*' || c == '/') return 1;
-    else return 0;
-}
+
 int main() {
     int t;
     cin >> t;
