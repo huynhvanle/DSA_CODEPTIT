@@ -1,0 +1,49 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+using namespace std;
+typedef long long ll;
+typedef double db;
+bool check(char c){
+    if(c == '+' || c == '-' || c == '*' || c == '/') return 1;
+    else return 0;
+}
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        stack<string> th;
+        for(char x : s){
+            if(!check(x))
+                th.push(string(1,x));
+            else{
+                string op2 = th.top();
+                th.pop();
+                string op1 = th.top();
+                th.pop();
+                string bthuc = "(" + op1 + string(1, x) + op2 + ")";
+                th.push(bthuc);
+            }
+        }
+        cout << th.top();
+        cout << endl;
+    }
+    return 0;
+}
