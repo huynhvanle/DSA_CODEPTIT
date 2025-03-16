@@ -1,0 +1,83 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int check[1005];
+int v, e;
+int canhcam[1002][1002];
+void reset(){
+    for(int i = 1; i <= v; i++)
+        check[i] = 0;
+}
+void dfs(vector<int> *dsk){
+    stack<int> s;
+    s.push(1);
+    check[1] = 1;
+    while(!s.empty()){
+        int a = s.top();
+        s.pop();
+        for(int x : dsk[a]){
+            if(!canhcam[a][x] && !check[x]){
+                check[x] = 1;
+                s.push(a);
+                s.push(x);
+            }
+        }
+    }
+}
+bool check_lien_thong(){
+    for(int u = 1; u <= v; u++){
+        if(!check[u])
+            return 0;
+    }
+    return 1;
+}
+void find(vector<pair<int,int>> &dsc, vector<int> *dsk){
+    for(pair<int,int> x : dsc){
+        reset();
+        canhcam[x.first][x.second] = 1;
+        canhcam[x.second][x.first] = 1;
+        dfs(dsk);
+        if(!check_lien_thong())
+            cout << x.first << " " << x.second << " ";
+        canhcam[x.first][x.second] = 0;
+        canhcam[x.second][x.first] = 0;
+    }
+}
+int main() {
+    fast()
+    run(){
+        cin >> v >> e;
+        vector<int> dsk[v + 1];
+        vector<pair<int,int>> dsc;
+        for(int i = 1; i <= e; i++){
+            int x, y;
+            cin >> x >> y;
+            dsc.push_back({x,y});
+            dsk[x].push_back(y);
+            dsk[y].push_back(x);
+        }
+        find(dsc,dsk);
+        cout << endl;
+    }
+    return 0;
+}
