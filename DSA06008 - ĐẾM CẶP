@@ -1,0 +1,72 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+
+// x = 0 => y ko ton tai
+// x = 1 => y = 0
+// x = 2 => y = 0, 1, 5, 6,...
+// x = 3 => y = 0, 1, 2, 4, 5,...
+// x = 4 => y = 0, 1, 5,...
+// x = 5 => y = 0, 1, 6,...
+// x >= 4 => y = 0, 1, x + 1,...
+
+int main(){
+    fast();
+    run(){
+        int n, m;
+        cin >> n >> m;
+        int a[n], b[m];
+        int N[3] = {0};
+        for(int i = 0; i < n; i++)
+            cin >> a[i];
+        for(int i = 0; i < m; i++){
+            cin >> b[i];
+            if(b[i] == 0 || b[i] == 1 || b[i] == 2)
+                N[b[i]]++;
+        }
+        sort(a, a + n);
+        sort(b, b + m);
+        int cnt = 0;
+        for(int i = 0; i < n; i++){
+            if(a[i] >= 1){
+                cnt += N[0];
+            }
+            if(a[i] >= 2){
+                cnt += N[1];
+                if(a[i] == 2 || a[i] == 4){
+                    auto it = lower_bound(b, b + m, 5);
+                    cnt += (m - (it - b) + 1);
+                }else if(a[i] == 3){
+                    auto it = lower_bound(b, b + m, 4);
+                    cnt += (m - (it - b) + 1);
+                    cnt += N[2];
+                }else{
+                    auto it = lower_bound(b, b + m, a[i] + 1);
+                    cnt += (m - (it - b) + 1);
+                }
+            }
+        }
+        cout << cnt << endl;
+    }
+    return 0;
+}
