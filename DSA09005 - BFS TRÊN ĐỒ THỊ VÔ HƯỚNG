@@ -1,0 +1,58 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+void bfs(int u, vector<int> *dsk, int *check){
+    queue<int> q;
+    q.push(u);
+    check[u] = 1;
+    cout << u << " ";
+    while(!q.empty()){
+        int a = q.front();
+        q.pop();
+        for(int x : dsk[a]){
+            if(!check[x]){
+                cout << x << " ";
+                q.push(x);
+                check[x] = 1;
+            }
+        }
+    }
+}
+int main() {
+    fast()
+    run(){
+        int v, e, u;
+        cin >> v >> e >> u;
+        vector<int> dsk[v + 1];
+        for(int i = 1; i <= e; i++){
+            int x, y;
+            cin >> x >> y;
+            dsk[x].push_back(y);
+            dsk[y].push_back(x);
+        }
+        int check[1005] = {0};
+        bfs(u, dsk, check);
+        cout << endl;
+    }
+    return 0;
+}
