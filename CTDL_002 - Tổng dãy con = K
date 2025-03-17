@@ -1,0 +1,72 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int n, k;
+int a[1000], N[1000];
+bool ok = 1;
+int check_tong(){
+    int cnt = 0;
+    for(int i = 1; i <= n; i++){
+        if(a[i])
+            cnt += N[i];
+    }
+    if (cnt == k) return 1;
+    else return 0;
+}
+void make(){
+    for(int i = 1; i <= n; i++)
+        a[i] = 0;
+}
+int result(){
+    if(check_tong()){
+        for(int i = 1; i <= n; i++)
+            if(a[i])
+            cout << N[i] << " ";
+        cout << endl;
+        return 1;
+    }
+    return 0;
+}
+void change(){
+    int i = n;
+    while(i > 0 && a[i]){
+        a[i] = 0;
+        i--;
+    }
+    if(i > 0){
+        a[i] = 1;
+    }else{
+        ok = 0;
+    }
+}
+int main(){
+    cin >> n >> k;
+    make();
+    for(int i = 1 ; i <= n; i++) cin >> N[i];
+    int cnt = 0;
+    while(ok){
+        cnt += result();
+        change();
+    }
+    cout << cnt;
+}
