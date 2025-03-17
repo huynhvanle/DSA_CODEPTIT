@@ -1,0 +1,64 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int n;
+int a[1000];
+bool ok = 1;
+int check_thuan_nghich(){
+    int l = 1, r = n;
+    while(l <= r){
+        if(a[l++] != a[r--]) return 0;
+    }
+    return 1;
+}
+void make(){
+    for(int i = 1; i <= n; i++)
+        a[i] = 0;
+}
+void result(){
+    if(check_thuan_nghich()){
+        for(int i = 1; i <= n; i++)
+            cout << a[i] << " ";
+        cout << endl;
+    }
+}
+void change(){
+    int i = n;
+    while(i > 0 && a[i]){
+        a[i] = 0;
+        i--;
+    }
+    if(i > 0){
+        a[i] = 1;
+    }else{
+        ok = 0;
+    }
+}
+int main(){
+    cin >> n;
+    make();
+    while(ok){
+        result();
+        change();
+    }
+}
