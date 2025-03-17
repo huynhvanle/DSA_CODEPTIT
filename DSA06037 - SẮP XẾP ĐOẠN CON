@@ -1,0 +1,56 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+
+int main(){
+    fast();
+    run(){
+        int n;
+        cin >> n;
+        int a[n];
+        for(int i = 0; i < n; i++) cin >> a[i];
+        int mang1[n], mang2[n];
+        mang1[0] = a[0];
+        mang2[n - 1] = a[n - 1];
+        for(int i = 1; i < n; i++){
+            mang1[i] = max(mang1[i - 1], a[i]);
+        }
+        for(int i = n - 2; i >= 0; i--){
+            mang2[i] = min(mang2[i + 1], a[i]);
+        }
+        int cnt = 0;
+        vector<int> id;
+        for(int i = 0; i < n - 1; i++){
+            if(mang1[i] <= mang2[i + 1]){
+                cnt++;
+                id.push_back(i + 1);
+            }
+        }
+        cout << cnt << endl;
+        if(!id.empty()){
+            for(int x : id) cout << x << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
