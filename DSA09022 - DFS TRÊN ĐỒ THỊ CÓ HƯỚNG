@@ -1,0 +1,64 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define test() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int v, e, u;
+int check[1001];
+void reset_check(){
+    for(int i = 1; i <= v; i++)
+        check[i] = 0;
+}
+void dfs(vector<int> *dsk){
+    reset_check();
+    stack<int> s;
+    s.push(u);
+    check[u] = 1;
+    cout << u << " ";
+    while(!s.empty()){
+        int a = s.top();
+        s.pop();
+        for(int x : dsk[a]){
+            if(!check[x]){
+                check[x] = 1;
+                s.push(a);
+                s.push(x);
+                cout << x << " ";
+                break;
+            }
+        }
+    }
+}
+int main(){
+    fast();
+    test(){
+        cin >> v >> e >> u;
+        vector<int> dsk[v + 1];
+        for(int i = 1; i <= e; i++){
+            int x, y;
+            cin >> x >> y;
+            dsk[x].push_back(y);
+        }
+        dfs(dsk);
+        cout << endl;
+    }
+    return 0;
+}
