@@ -1,0 +1,78 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define test() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int n, e, u, v;
+int check[1001];
+int truoc[1001];
+void reset(){
+    for(int i = 1; i <= n; i++){
+        check[i] = 0;
+        truoc[i] = 0;
+    }
+}
+void dfs(vector<int> *dsk){
+    reset();
+    stack<int> s;
+    s.push(u);
+    check[u] = 1;
+    while(!s.empty()){
+        int a = s.top();
+        s.pop();
+        for(int x : dsk[a]){
+            if(!check[x]){
+                check[x] = 1;
+                truoc[x] = a;
+                s.push(a);
+                s.push(x);
+                break;
+            }
+        }
+    }
+}
+void find_way(vector<int> *dsk){
+    dfs(dsk);
+    if(truoc[v]){
+        vector<int> dd;
+        while(v){
+            dd.push_back(v);
+            v = truoc[v];
+        }
+        for(auto it = dd.rbegin(); it != dd.rend(); it++)
+            cout << *it << " ";
+    }else
+        cout << -1;
+}
+int main(){
+    fast();
+    test(){
+        cin >> n >> e >> u >> v;
+        vector<int> dsk[n + 1];
+        for(int i = 1; i <= e; i++){
+            int x, y; cin >> x >> y;
+            dsk[x].push_back(y);
+        }
+        find_way(dsk);
+        cout << endl;
+    }
+    return 0;
+}
