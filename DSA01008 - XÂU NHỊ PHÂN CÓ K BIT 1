@@ -1,0 +1,67 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define test() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int n, k;
+int a[20];
+bool ok;
+void init(){
+    for(int i = 1; i <= n; i++)
+        a[i] = 0;
+}
+int check(){
+    int cnt = 0;
+    for(int i = 1; i <= n; i++)
+        if(a[i] == 1)
+            cnt++;
+    return cnt;
+}
+void result(){
+    if(check() == k){
+        for(int i = 1; i <= n; i++)
+            cout << a[i];
+        cout << endl;
+    }
+}
+void next(){
+    int i = n;
+    while(i > 0 && a[i] == 1){
+        a[i] = 0;
+        i--;
+    }
+    if(i > 0){
+        a[i] = 1;
+    }else ok = 0;
+}
+int main(){
+    fast();
+    test(){
+        cin >> n >> k;
+        ok = 1;
+        init();
+        while(ok){
+            result();
+            next();
+        }
+    }
+    return 0;
+}
