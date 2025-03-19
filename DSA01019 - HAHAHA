@@ -1,0 +1,69 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define test() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int n;
+bool ok;
+char a[20];
+void init(){
+    for(int i = 2; i <= n; i++)
+        a[i] = 'A';
+    a[1] = 'H';
+}
+bool check(){
+    if(a[n] != 'A') return 0;
+    for(int i = 2; i <= n; i++){
+        if(a[i] == 'H' && a[i - 1] == 'H')
+            return 0;
+    }
+    return 1;
+}
+void result(){
+    if(check()){
+        for(int i = 1; i <= n; i++)
+            cout << a[i];
+        cout << endl;
+    }
+}
+void next(){
+    int i = n;
+    while(i > 0 && a[i] == 'H'){
+        a[i] = 'A';
+        i--;
+    }
+    if(i > 0){
+        a[i] = 'H';
+    }else ok = 0;
+}
+int main(){
+    fast();
+    test(){
+        cin >> n;
+        ok = 1;
+        init();
+        while(ok){
+            result();
+            next();
+        }
+    }
+    return 0;
+}
