@@ -1,0 +1,47 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define test() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int main(){
+    fast();
+    int n, k;
+    cin >> n >> k;
+    vector<string> a;
+    for(int i = 0; i < n; i++){
+        string s;
+        cin >> s;
+        a.push_back(s);
+    }
+    sort(a.begin(), a.end());
+    a.erase(unique(a.begin(), a.end()), a.end());
+
+    string rs = "";
+    for(int i = 0; i < k; i++) rs += "0";
+    for(int i = 0; i < a.size() - k; i++) rs += "1";
+    do{
+        for(int i = 0; i < rs.size(); i++)
+            if(rs[i] == '0')
+                cout << a[i] << " ";
+        cout << endl;
+    }while(next_permutation(rs.begin(),rs.end()));
+    return 0;
+}
