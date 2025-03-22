@@ -1,0 +1,64 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+int a[100];
+vector<int> x(100);
+int n, k;
+vector<vector<int>> rs;
+void find(int l, int d){
+    for(int i = l; i < n; i++){
+        if(a[i] <= d){
+            x.push_back(a[i]);
+            d -= a[i];
+            if(d == 0)
+                rs.push_back(x);
+            else
+                find(i + 1, d);
+            d += a[i];
+            x.pop_back();
+        }
+    }
+}
+int main(){
+    fast();
+    run(){
+        cin >> n >> k;
+        for(int i = 0; i < n; i++) cin >> a[i];
+        sort(a, a + n);
+        x.clear();
+        rs.clear();
+        find(0, k);
+        if(rs.empty()) cout << -1;
+        else{
+            for(int i = 0; i < rs.size(); i++){
+                cout << "[";
+                for(int j = 0; j < rs[i].size() - 1; j++)
+                    cout << rs[i][j] << " ";
+                cout << rs[i][rs[i].size() - 1] << "] ";
+            }
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
