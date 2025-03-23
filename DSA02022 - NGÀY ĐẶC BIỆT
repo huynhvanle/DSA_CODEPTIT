@@ -1,0 +1,68 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+typedef long long ll;
+typedef double db;
+struct lich{
+    string ngay;
+    string thang = "02";
+    string nam;
+};
+vector<lich> a;
+string day[3] = {"02", "20", "22"};
+int x[1000];
+void find_al(string s){
+    lich x;
+    x.nam = s;
+    for(int i = 0; i < 3; i++){
+        x.ngay = day[i];
+        a.push_back(x);
+    }
+}
+void find(int i){
+    for(int j = 0; j <= 2; j+= 2){
+        x[i] = j;
+        if(i == 3){
+            string s = "2";
+            for(int i = 1; i <= 3; i++)
+                s += to_string(x[i]);
+            find_al(s);
+        }else{
+            find(i + 1);
+        }
+    }
+}
+bool cmp(lich x, lich y){
+    if(x.ngay != y.ngay)
+    return x.ngay < y.ngay;
+    else
+        return x.nam < y.nam;
+}
+int main(){
+    fast();
+    find(1);
+    sort(a.begin(), a.end(), cmp);
+    for(lich x : a){
+            cout << x.ngay << "/" << x.thang << "/" << x.nam << endl;
+    }
+    return 0;
+}
+
