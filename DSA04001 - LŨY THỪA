@@ -1,0 +1,41 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+
+int main(){
+    fast();
+    run(){
+        ll n, k;
+        cin >> n >> k;
+        ll result = 1;
+        while(k){
+            if(k % 2 != 0){
+                result = (result % MOD) * (n % MOD) % MOD;
+            }
+            k /= 2;
+            n = (n % MOD) * (n % MOD) % MOD;
+        }
+        cout << result << endl;
+    }
+}
