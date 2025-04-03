@@ -1,0 +1,79 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int n, b;
+int x[101];
+int xopt[101];
+int fopt = 0;
+
+struct dv{
+    int c, a;
+    int index;
+};
+dv m[101];
+
+
+bool cmp(dv dv1, dv dv2) {
+    return dv1.c * dv2.a > dv2.c * dv1.a;
+}
+
+
+void find(int k, int b, int f){
+    for(int i = 0; i <= 1; i++){
+        x[k] = i;
+        if(k == n && f > fopt && b >= 0){
+            fopt = f;
+            for(int j = 1; j <= n; j++)
+                xopt[j] = x[j];
+        }else if(fopt < (n - k + 1) * m[1].c && b >= 0) {
+            find(k + 1, b - i * m[k].a, f + i * m[k].c);
+        }
+    }
+}
+int main() {
+//    freopen("data.in", "r", stdin);
+    cin >> n >> b;
+    for(int i = 1; i <= n; i++){
+        cin >> m[i].c;
+        m[i].index = i;
+    }
+    for(int i = 1; i <= n; i++) cin >> m[i].a;
+    
+    sort(m + 1, m + n + 1, cmp);
+    find(1, b, 0);
+
+    cout << fopt << endl;
+    int Xopt[101];
+    for(int i = 1; i <= n; i++){
+        if(xopt[i] == 1){
+            Xopt[m[i].index] = 1;
+        }
+    }
+    for(int i = 1; i <= n; i++)
+        cout << Xopt[i] << " ";
+    return 0;
+}
