@@ -1,0 +1,76 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int x[100];
+int n, k;
+vector<string> kq;
+
+bool check(){
+    int total = 0;
+    for(int i = 1; i <= n; i++){
+        int cnt = 0;
+        if(x[i] == 1){
+            while(x[i] == 1){
+                cnt++;
+                i++;
+            }
+            i--;
+        }
+        if(cnt == k)
+            total++;
+        if(total > 1) return 0;
+    }
+    if(total == 1) return 1;
+    else return 0;
+}
+void find(int i){
+    for(int j = 1; j >= 0; j--){
+        x[i] = j;
+        if(i == n){
+            if(check()){
+                string s;
+                for(int a = 1; a <= n; a++){
+                    if(x[a])
+                        s += "A";
+                    else s += "B";
+                }
+                kq.push_back(s);
+            }
+        }else
+            find(i + 1);
+    }
+}
+int main() {
+    fast();
+    cin >> n >> k;
+    find(1);
+    cout << kq.size() << endl;
+    for(string s : kq){
+        cout << s << endl;
+    }
+    return 0;
+}
