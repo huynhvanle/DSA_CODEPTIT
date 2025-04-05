@@ -1,0 +1,67 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int n;
+int a[50][50];
+
+vector<string> rs;
+
+
+void find(string s, int i, int j){
+    if(i > n || j > n) return;
+    if(i == 0 || j == 0) return;
+    if(!a[i][j]) return;
+    if(i == n && j == n){
+        rs.push_back(s);
+        return;
+    }
+    a[i][j] = 0;
+    find(s + "D", i + 1, j);
+    find(s + "R", i, j + 1);
+    find(s + "L", i, j - 1);
+    find(s + "U", i - 1, j);
+    a[i][j] = 1;
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> n;
+        for(int i = 1; i <= n; i++)
+            for(int j = 1; j <= n; j++)
+                cin >> a[i][j];
+        rs.clear();
+        find("", 1, 1);
+        sort(all(rs));
+        if(rs.empty()) cout << -1;
+        else{
+        for(string x : rs) cout << x << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
