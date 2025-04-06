@@ -1,0 +1,63 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+struct matran{
+    ll x[2][2];
+    friend matran operator * (matran a, matran b){
+        matran c;
+        for(int i = 0; i < 2; i++){
+            for(int j = 0; j < 2; j++){
+                c.x[i][j] = 0;
+                for(int k = 0; k < 2; k++){
+                    c.x[i][j] += a.x[i][k] * b.x[k][j];
+                    c.x[i][j] %= MOD;
+                }
+            }
+        }
+        return c;
+    }
+};
+
+matran powwer(matran a, ll n){
+    if(n == 1) return a;
+    matran tmp = powwer(a, n / 2);
+    if(n % 2 == 1)
+        return tmp * tmp * a;
+    else
+        return tmp * tmp;
+}
+int main() {
+   fast();
+   run(){
+       ll n;
+       cin >> n;
+       matran a;
+       a.x[0][0] = a.x[0][1] = a.x[1][0] = 1;
+       a.x[1][1] = 0;
+       cout << powwer(a, n).x[0][1] << endl;
+   }
+   return 0;
+}
