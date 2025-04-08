@@ -1,0 +1,74 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+int n, p, s;
+
+int snt[201];
+int a[200];
+int st = 0;
+
+vector<string> rs;
+
+void init(){
+    for(int i = 0; i < 201; i++)
+        snt[i] = 1;
+    snt[0] = snt[1] = 0;
+    for(int i = 2; i * i < 201; i++){
+        if(snt[i]){
+            for(int j = i * i; j < 201; j += i)
+                snt[j] = 0;
+        }
+    }
+    for(int i = 0; i < 201; i++)
+        if(snt[i])
+            a[st++] = i;
+}
+
+void find(string tmp, int l, int i, int d){
+    for(int j = l; j < st; j++){
+        if(d == s && i == n){
+            rs.push_back(tmp);
+            return;
+        }else if(d < s && i < n && a[j] > p){
+            find(tmp + to_string(a[j]) + " ", j + 1, i + 1, d + a[j]);
+        }
+    }
+}
+
+int main() {
+    fast();
+    init();
+    run(){
+        rs.clear();
+        cin >> n >> p >> s;
+        find("", 0, 0, 0);
+        cout << rs.size() << endl;
+        for(string x : rs)
+            cout << x << endl;
+        cout << endl;
+    }
+    return 0;
+}
