@@ -1,0 +1,54 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <climits>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int main() {
+    fast();
+    int n, k;
+    cin >> n >> k;
+    int a[1000];
+    for(int i = 0; i < k; i++)
+        a[i] = i;
+    string s[1000];
+    for(int i = 0; i < n; i++)
+        cin >> s[i];
+    int res = 1e9;
+    do{
+        vector<int> num;
+        for(int i = 0; i < n; i++){
+            string tmp = "";
+            for(int j = 0; j < k; j++){
+                tmp += string(1, s[i][a[j]]);
+            }
+            num.push_back(stoi(tmp));
+        }
+        res = min(res, abs(*max_element(all(num)) - *min_element(all(num))));
+    }while(next_permutation(a, a + k));
+    cout << res;
+}
