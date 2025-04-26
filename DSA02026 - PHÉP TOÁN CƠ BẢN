@@ -1,0 +1,95 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <climits>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+set<int> id;
+string s;
+bool ok;
+
+void check(){
+    stringstream ss(s);
+    string s1, op, s2, s3;
+    ss >> s1 >> op >> s2 >> s3 >> s3;
+    int a = stoi(s1);
+    int b = stoi(s2);
+    int c = stoi(s3);
+    if(a + b == c){
+        if(op == "+" || id.count(3)){
+            ok = 1;
+            s[3] = '+';
+        }
+    }else if(a - b == c){
+        if(op == "-" || id.count(3)){
+            ok = 1;
+            s[3] = '-';
+        }
+    }
+    if(ok) cout << s;
+}
+
+void Try(int i){
+    if(ok) return;
+    if(i == s.size()){
+        check();
+        return;
+    }
+    if(id.count(i) && i != 3){
+        int j;
+        if(i == 0 || i == 5 || i == 10){
+            j = 1;
+        }else
+            j = 0;
+        for(;j <= 9; j++){
+            s[i] = j + '0';
+            Try(i + 1);
+        }
+    }else
+        Try(i + 1);
+}
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        getline(cin, s);
+        ok = false;
+        id.clear();
+        for (int i = 0; i < s.size(); ++i) {
+            if (s[i] == '?') 
+                id.insert(i);
+        }
+        Try(0);
+        if (!ok) cout << "WRONG PROBLEM!";
+        cout << '\n';
+    }
+    return 0;
+}
