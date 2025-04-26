@@ -1,0 +1,55 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <climits>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+string s;
+int n;
+set<string> rs;
+
+void Try(int l, string tmp){
+    for(int i = l; i < s.size(); i++){
+        tmp += string(1, s[i]);
+        if(!tmp.empty())
+            rs.insert(tmp);
+        Try(i + 1, tmp);
+        tmp.pop_back();
+    }
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> n >> s;
+        sort(all(s));
+        Try(0, "");
+        for(string x : rs)
+            cout << x << " ";
+        cout << endl;
+    }
+}
