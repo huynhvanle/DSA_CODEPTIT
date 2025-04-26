@@ -1,0 +1,75 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <climits>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int n;
+vector<vector<int>> rs;
+int a[100];
+
+int check(int x){
+    if(x <= 1) return 0;
+    for(int i = 2; i * i <= x; i++)
+        if(x % i == 0)
+            return 0;
+    return 1;
+}
+
+void Try(int l, vector<int> &v){
+    for(int j = l; j < n; j++){
+        v.push_back(a[j]);
+        if(!v.empty())
+            rs.push_back(v);
+        Try(j + 1, v);
+        v.pop_back();
+    }
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> n;
+        for(int i = 0; i < n; i++) cin >> a[i];
+        rs.clear();
+        sort(a, a + n, greater<int>());
+        vector<int> v;
+        Try(0, v);
+        sort(all(rs));
+        for(vector<int> x : rs){
+            int sum = 0;
+            string s = "";
+            for(int y : x){
+                sum += y;
+                s += to_string(y) + " ";
+            }
+            if(check(sum)){
+                cout << s << endl;
+            }
+        }
+    }
+}
