@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int main() {
+    fast();
+    int d, s;
+    cin >> d >> s;
+    string rs1 = "";
+    string rs2 = "";
+    if(s > d * 9 || s == 0) cout << "-1 -1";
+    else{
+        int a = s % 9;
+        s /= 9;
+        while(s--){
+            rs1 += "9";
+            rs2 += "9";
+            d--;
+        }
+        if(a > 0){
+            rs1 += to_string(a);
+            rs2 += to_string(a);
+            d--;
+        }
+        while(d > 1){
+            rs1 += "0";
+            rs2 += "0";
+            d--;
+        }
+        if(d == 1){
+            rs2 += "0";
+            rs1 += "1";
+            int i = rs1.size() - 2;
+            while(rs1[i] == '0') i--;
+            rs1[i] -= 1;
+        }
+        reverse(all(rs1));
+        cout << rs1 << " " << rs2;
+    }
+}
