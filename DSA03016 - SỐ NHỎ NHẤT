@@ -1,0 +1,64 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <climits>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int main() {
+    fast();
+    run(){
+        int s, d;
+        cin >> s >> d;
+        if(s > d * 9) cout << "-1";
+        else{
+            string rs = "";
+            int a = s % 9;
+            s /= 9;
+            while(s--){
+                rs += "9";
+                d--;
+            }
+            if(a > 0){
+                rs += to_string(a);
+                d--;
+            }
+            while(d > 1){
+                rs += "0";
+                d--;
+            }
+            if(d == 1){
+                int i = rs.size() - 1;
+                while(rs[i] == '0') i--;
+                rs[i]--;
+                rs += "1";
+            }
+            reverse(all(rs));
+            cout << rs;
+        }
+        cout << endl;
+    }
+}
