@@ -1,0 +1,52 @@
+#include <iostream>
+#include <math.h>
+#include <algorithm>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <set>
+#include <cctype>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <cstring>
+#include <fstream>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <climits>
+#include <stdio.h>
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+using namespace std;
+typedef long long ll;
+typedef double db;
+typedef float fl;
+
+int main() {
+    fast();
+    run(){
+        int n; cin >> n;
+        multiset<ll> a;
+        for(int i = 0; i < n; i++){
+            ll x; cin >> x;
+            a.insert(x);
+        }
+        ll rs = 0;
+        while(a.size() > 1){
+            auto x = *a.begin();
+            a.erase(a.begin());
+            auto y = *a.begin();
+            a.erase(a.begin());
+            ll z = (x % MOD + y % MOD) % MOD; 
+            a.insert(z);
+            rs = (rs % MOD + z % MOD) % MOD ;
+        }
+        cout << rs << endl;
+    }
+}
