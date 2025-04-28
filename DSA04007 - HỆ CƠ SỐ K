@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int Change10(string s, int k){
+    int x = 0;
+    int j = s.size() - 1;
+    for(int i = 0; i < s.size(); i++){
+        x += (s[i] - '0')  * pow(k, j--);
+    }
+    return x;
+}
+string Changek(ll a, int k){
+    string s = "";
+    while(a){
+        s += to_string(a % k);
+        a /= k;
+    }
+    reverse(all(s));
+    return s;
+}
+
+int main() {
+    fast();
+    run(){
+        int k;
+        string a, b;
+        string rs = "";
+        cin >> k >> a >> b;
+        int x = Change10(a,k);
+        int y = Change10(b,k);
+        cout << Changek(x + y, k) << endl;
+    }
+}
