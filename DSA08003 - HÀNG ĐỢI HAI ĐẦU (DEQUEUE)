@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    int n;
+    cin >> n;
+    cin.ignore();
+    deque<string> q;
+    while(n--){
+        string s;
+        getline(cin, s);
+        stringstream ss(s);
+        string tmp;
+        ss >> tmp;
+        if(tmp == "PUSHBACK"){
+            ss >> tmp;
+            q.push_back(tmp);
+        }else if(tmp == "PUSHFRONT"){
+            ss >> tmp;
+            q.push_front(tmp);
+        }else if(tmp == "POPBACK"){
+            if(!q.empty())
+                q.pop_back();
+        }else if(tmp == "POPFRONT"){
+            if(!q.empty())
+                q.pop_front();
+        }else if(tmp == "PRINTBACK"){
+            if(q.empty())
+                cout << "NONE" << endl;
+            else
+                cout << q.back() << endl;
+        }else if(tmp == "PRINTFRONT"){
+            if(q.empty())
+                cout << "NONE" << endl;
+            else
+                cout << q.front() << endl;
+        }
+    }
+}
