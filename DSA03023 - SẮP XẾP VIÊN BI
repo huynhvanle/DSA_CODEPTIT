@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    int n;
+    string s;
+    cin >> n >> s;
+    int x = 0, d = 0;
+    for(int i = 0; i < n; i++){
+        if(s[i] == 'X') x++;
+        else if(s[i] == 'D') d++;
+    }
+    int xd = 0, dx = 0, wa = 0;
+    for(int i = 0; i < n; i++){
+        if(i < x && s[i] != 'X'){
+            if(s[i] == 'D') xd++;
+            wa++;
+        }
+        if(i >= n - d && s[i] != 'D'){
+            if(s[i] == 'X') dx++;
+            wa++;
+        }
+    }
+    cout << wa - min(xd, dx);
+}
