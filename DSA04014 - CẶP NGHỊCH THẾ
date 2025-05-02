@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+ll merge(ll *a, ll *tmp, ll l, ll m, ll r){
+    ll i = l;
+    ll j = m + 1;
+    ll cnt = 0, k = l;
+    while(i <= m && j <= r){
+        if(a[i] > a[j]){
+            tmp[k++] = a[j++];
+            cnt += (m - i + 1);
+        }else{
+            tmp[k++] = a[i++];
+        }
+    }
+    while(i <= m)
+        tmp[k++] = a[i++];
+    while(j <= r)
+        tmp[k++] = a[j++];
+    for(int x = l; x <= r; x++)
+        a[x] = tmp[x];
+    return cnt;
+}
+
+ll Find(ll *a, ll *tmp, ll l, ll r){
+    if(l >= r) return 0;
+    ll m = (l + r) / 2;
+    ll cnt = 0;
+    cnt += Find(a, tmp, l, m);
+    cnt += Find(a, tmp, m + 1, r);
+    cnt += merge(a, tmp, l, m, r);
+    return cnt;
+}
+
+int main() {
+    fast();
+    run(){
+        int n; cin >> n;
+        ll a[n];
+        for(int i = 0; i < n; i++) cin >> a[i];
+        ll tmp[1000000] = {0};
+        cout << Find(a, tmp, 0, n - 1) << endl;
+    }
+}
