@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int main() {
+    fast();
+    run(){
+        ll p, q; cin >> p >> q;
+        ll rg = __gcd(p, q);
+        p /= rg; q /= rg;
+        while(p > 1){
+            ll x = (q + p - 1) / p;
+            p = (p * x) - (1 * q);
+            q *= x;
+            rg = __gcd(p, q);
+            p /= rg;
+            q /= rg;
+            cout << 1 << "/" << x << " + ";
+        }
+        cout << p << "/" << q << endl;
+    }
+}
