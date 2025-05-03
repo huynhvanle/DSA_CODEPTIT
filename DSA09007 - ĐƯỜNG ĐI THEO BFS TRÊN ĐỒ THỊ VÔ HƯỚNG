@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int n, m, u, v;
+int a[1000][1000], check[1000], truoc[1000];
+
+void Try(int u){
+    queue<int> q;
+    q.push(u);
+    check[u] = 1;
+    while(!q.empty()){
+        int i = q.front();
+        q.pop();
+        for(int j = 1; j <= n; j++){
+            if(!check[j] && a[i][j]){
+                check[j] = 1;
+                q.push(j);
+                truoc[j] = i;
+            }
+        }
+    }
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> n >> m >> u >> v;
+        reset(a); reset(check); reset(truoc);
+        for(int i = 0; i < m; i++){
+            int x, y; cin >> x >> y;
+            a[x][y] = 1;
+            a[y][x] = 1;
+        }
+        Try(u);
+        if(!truoc[v]) cout << -1;
+        else{
+            vector<int> dd;
+            while(v){
+                dd.push_back(v);
+                v = truoc[v];
+            }
+            reverse(all(dd));
+            for(int x : dd)
+                cout << x << " ";
+        }
+        cout << endl;
+    }
+}
