@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int dx[8] = {-1, -1, 0, 1, 1, 1, 0, -1};
+int dy[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+
+int n, m;
+int a[500][500];
+int cnt;
+
+void dfs(int i, int j){
+    a[i][j] = 0;
+    for(int k = 0; k < 8; k++){
+        int in = i + dx[k];
+        int jn = j + dy[k];
+        if(in >= 0 && in < n && jn >= 0 && jn < m && a[in][jn])
+            dfs(in, jn);
+    }
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> n >> m;
+        reset(a);
+        cnt = 0;
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)
+                cin >> a[i][j];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(a[i][j]){
+                    cnt++;
+                    dfs(i,j);
+                }
+            }
+        }
+        cout << cnt << endl;
+    }
+}
