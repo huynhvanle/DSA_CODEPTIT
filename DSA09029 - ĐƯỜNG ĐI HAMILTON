@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int n, m;
+vector<int> a[100];
+int check[100];
+int ok;
+
+void Find(int i, int cnt){
+    if(cnt == n) ok = 1;
+    if(ok) return;
+    for(int j : a[i]){
+        if(!check[j]){
+            check[j] = 1;
+            Find(j, cnt + 1);
+            check[j] = 0;
+        }
+    }
+}
+int main() {
+    fast();
+    run(){
+        cin >> n >> m;
+        reset(a);
+        for(int i = 0; i < m; i++){
+            int x, y; cin >> x >> y;
+            a[x].push_back(y);
+            a[y].push_back(x);
+        }
+        ok = 0;
+        for(int i = 1; i <= n && !ok; i++){
+            reset(check);
+            check[i] = 1;
+            Find(i, 1);
+        }
+        cout << ok << endl;
+    }
+}
