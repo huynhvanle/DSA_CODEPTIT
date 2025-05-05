@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct mt {
+    int n;
+    ll a[10][10];
+    friend mt operator *(mt x, mt y) {
+        mt c;
+        c.n = x.n;
+        for(int i = 0; i < x.n; i++) {
+            for(int j = 0; j < y.n; j++) {
+                c.a[i][j] = 0;
+                for(int k = 0; k < x.n; k++) {
+                    c.a[i][j] += x.a[i][k] * y.a[k][j];
+                    c.a[i][j] %= MOD;
+                }
+            }
+        }
+        return c;
+    }
+};
+
+mt power(mt x, int k) {
+    if(k == 1) return x;
+    mt tmp = power(x, k / 2);
+    if(k % 2 == 0) return tmp * tmp;
+    else return tmp * tmp * x;
+}
+
+int main() {
+    fast();
+    run() {
+        int n, k;
+        cin >> n >> k;
+        mt x;
+        x.n = n;
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++)
+                cin >> x.a[i][j];
+        mt y = power(x, k);
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++)
+                cout << y.a[i][j] << " ";
+            cout << endl;
+        }
+    }
+}
