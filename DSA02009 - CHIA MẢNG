@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+bool check[30];
+int a[30];
+int n, k, target;
+bool ok;
+
+void Try(int l, int d, int cnt){
+    if(cnt == k) ok = 1;
+    if(ok) return;
+    if(d == target)
+        Try(0, 0, cnt + 1);
+    for(int i = l; i < n; i++){
+        if(!check[i]){
+            check[i] = 1;
+            if(d + a[i] <= target){
+                Try(i + 1, d + a[i], cnt);
+            }
+            check[i] = 0;
+        }
+    }
+}
+
+
+int main() {
+    fast();
+    run(){
+        cin >> n >> k;
+        reset(check);
+        int sum = 0;
+        for(int i = 0; i < n; i++){
+            cin >> a[i];
+            sum += a[i];
+        }
+        if(sum % k != 0) cout << 0;
+        else{
+            target = sum / k;
+            ok = 0;
+            Try(0, 0, 1);
+            cout << ok;
+        }
+        cout << endl;
+    }
+}
