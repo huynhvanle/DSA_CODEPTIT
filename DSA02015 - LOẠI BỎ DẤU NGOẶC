@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+set<string> rs;
+string s;
+bool ok;
+
+bool check(string x){
+    int op = 0;
+    if(x.size() <= 1) return 0;
+    for(int i = 0; i < x.size(); i++){
+        if(x[i] == '(') op++;
+        else if(x[i] == ')'){
+            if(op > 0) op--;
+            else return 0;
+        }
+    }
+    if(op == 0) return 1;
+    else return 0;
+}
+
+void Try(int l, int cnt, string x, int era){
+    if(cnt == era){
+        if(check(x)){
+            ok = 1;
+            rs.insert(x);
+        }
+        return;
+    }
+    for(int i = l; i < x.size(); i++){
+      if(x[i] == '(' || x[i] == ')'){
+        string tmp = x;
+        tmp.erase(i,1);
+            Try(i, cnt + 1, tmp, era);
+      }
+    }
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> s;
+        rs.clear();
+        ok = 0;
+        int i = 0;
+        while(!ok && i <= s.size()){
+            Try(0, 0, s, i);
+            i++;
+        }
+        if(!ok) {
+            cout << -1 << endl;
+            continue;
+        }
+        for(auto x : rs)
+            cout << x << " ";
+        cout << endl;
+    }
+}
