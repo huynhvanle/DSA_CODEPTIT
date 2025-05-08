@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        int n; cin >> n;
+        int x4 = 0, x7 = 0;
+        for(int i = 0; i <= n / 7; i++){
+            if((n - 7 * i) % 4 == 0){
+                int tmp4 = (n - 7 * i) / 4;
+                if(!x4 || (tmp4 + i < x4 + x7) || ((tmp4 + i == x4 + x7) && tmp4 > x4)){
+                    x4 = tmp4;
+                    x7 = i;
+                }
+            }
+        }
+        string s = "";
+        while(x4--) s += "4";
+        while(x7--) s += "7";
+        if(s.empty()) cout << -1 << endl;
+        else cout << s << endl;
+    }
+}
