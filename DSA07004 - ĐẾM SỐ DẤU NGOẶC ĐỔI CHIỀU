@@ -1,52 +1,39 @@
-#include <iostream>
-#include <math.h>
-#include <algorithm>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <set>
-#include <cctype>
-#include <map>
-#include <unordered_map>
-#include <unordered_set>
-#include <cstring>
-#include <fstream>
-#include <deque>
-#include <stack>
-#include <queue>
-#define MOD 1000000007
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef double db;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
 
 int main() {
-    int t;
-    cin >> t;
-    while(t--){
-        cin.ignore();
-        string s;
-        cin >> s;
+    fast();
+    run(){
+        string s; cin >> s;
+        stack<char> st;
         int cnt = 0;
-        while(s.size()){
-            while(s.find("()") != string::npos)
-                s.erase(s.find("()"),2);
-            if(s[0] == ')'){
-                s[0] = '(';
-                cnt++;
-                if(s[1] == '('){
-                    s[1] = ')';
-                    cnt++;
-                }
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '('){
+                st.push('(');
             }else{
-                if(s[1] == '('){
-                    s[1] = ')';
+                if(st.empty()){
+                    st.push('(');
                     cnt++;
+                }else{
+                    char c = st.top();
+                    if(c == ')') cnt++;
+                    st.pop();
                 }
             }
         }
+        cnt += st.size() / 2;
         cout << cnt << endl;
     }
-    return 0;
 }
-
