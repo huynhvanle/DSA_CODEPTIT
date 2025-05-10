@@ -1,52 +1,36 @@
-#include <iostream>
-#include <math.h>
-#include <algorithm>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <set>
-#include <cctype>
-#include <map>
-#include <unordered_map>
-#include <unordered_set>
-#include <cstring>
-#include <fstream>
-#include <deque>
-#include <stack>
-#include <queue>
-#define MOD 1000000007
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef double db;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
 
 int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        cin >> n;
-        int a[n];
-        stack<int> s;
+    fast();
+    run(){
+        int n; cin >> n;
+        int a[n], b[n];
         for(int i = 0; i < n; i++) cin >> a[i];
-        for(int i = n - 1; i >= 0; i--) s.push(a[i]);
-        int st = 0;
-        while(!s.empty()){
-            int x = s.top();
-            st++;
-            s.pop();
+        for(int i = 0; i < n; i++){
             int dg = 0;
-            for(int i = st; i < n; i++){
-                if(a[i] > x){
-                    cout << a[i];
+            for(int j = i + 1; j < n; j++){
+                if(a[j] > a[i]){
+                    b[i] = a[j];
                     dg = 1;
                     break;
                 }
             }
-            if(dg == 0) cout << -1;
-            cout << " ";
+            if(!dg) b[i] = -1;
         }
+        for(int x : b) cout << x << " ";
         cout << endl;
     }
-    return 0;
 }
