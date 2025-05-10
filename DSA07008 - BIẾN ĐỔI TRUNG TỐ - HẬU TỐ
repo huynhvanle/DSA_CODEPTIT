@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int check(char c){
+    if(c == '^') return 3;
+    else if(c == '*' || c == '/') return 2;
+    else return 1;
+}
+
+int main() {
+    fast();
+    run(){
+        string s; cin >> s;
+        stack<char> a;
+        string rs = "";
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '(') a.push('(');
+            else if(isalpha(s[i])){
+                rs += string(1, s[i]);
+            }else if(s[i] == ')'){
+                while(!a.empty() && a.top() != '('){
+                    rs += a.top();
+                    a.pop();
+                }
+                a.pop();
+            }else{
+                while(!a.empty() && a.top() != '('){
+                    char c = a.top();
+                    if(check(c) > check(s[i]) || (check(c) == check(s[i]) && s[i] != '^')){
+                        rs += string(1,c);
+                        a.pop();
+                    }else
+                        break;
+                }
+                a.push(s[i]);
+            }
+        }
+        while(!a.empty()){
+            rs += a.top();
+            a.pop();
+        }
+        cout << rs << endl;
+    }
+}
