@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        string s1, s2; cin >> s1 >> s2;
+        s1[0] -= 48;
+        s2[0] -= 48;
+        int check[9][9] = {0};
+        int di[8] = {-2, -2, -1, 1, 2, 2, -1, 1};
+        int dj[8] = {-1, 1, 2, 2, -1, 1, -2, -2};
+        queue<pair<int,int>> q;
+        int a = s1[0] - '0', b = s1[1] - '0';
+        int c = s2[0] - '0', d = s2[1] - '0';
+        q.push({a,b});
+        check[a][b] = 1;
+        while(!q.empty()){
+            auto x = q.front(); q.pop();
+            int i = x.fi, j = x.se;
+            if(i == c && j == d){
+                cout << check[i][j] - 1 << endl;
+                break;
+            }
+            for(int k = 0; k < 8; k++){
+                int in = i + di[k];
+                int jn = j + dj[k];
+                if(in >= 1 && in <= 8 && jn >= 1 && jn <= 8 && !check[in][jn]){
+                    q.push({in,jn});
+                    check[in][jn] = check[i][j] + 1;
+                }
+            }
+        }
+    }
+}
