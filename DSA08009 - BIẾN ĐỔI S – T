@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        int s, t; cin >> s >> t;
+        queue<int> q;
+        q.push(s);
+        int check[100000] = {0};
+        check[s] = 1;
+        while(!q.empty()){
+            int x = q.front();
+            q.pop();
+            if(x == t){
+                cout << check[x] - 1 << endl;
+                break;
+            }
+            int y1 = x - 1;
+            int y2 = x * 2;
+            if(!check[y1]){
+                q.push(y1);
+                check[y1] = check[x] + 1;
+            }
+            if(!check[y2] && x < t){
+                q.push(y2);
+                check[y2] = check[x] + 1;
+            }
+        }
+    }
+}
