@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int n;
+
+void Try(vector<int> &a, vector<int>  &d){
+    d = a;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < i; j++){
+            if(a[j] < a[i])
+                d[i] = max(d[i], d[j] + a[i]);
+        }
+    }
+}
+
+int main() {
+    fast();
+    run(){
+        cin >> n;
+        vector<int> a(n), incr(n), decr(n);
+        for(int i = 0; i < n; i++) cin >> a[i];
+        Try(a, incr);
+        reverse(all(a));
+        Try(a, decr);
+        reverse(all(decr));
+        reverse(all(a));
+        vector<int> bito(n);
+        for(int i = 0; i < n; i++) bito[i] = incr[i] + decr[i] - a[i];
+        cout << *max_element(all(bito)) << endl;
+    }
+}
+
