@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        int m, n; cin >> m >> n;
+        int a[m][n];
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+                cin >> a[i][j];
+        queue<pair<int,int>> q;
+        q.push({0,0});
+        int check[m][n];
+        reset(check);
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            int i = top.fi;
+            int j = top.se;
+            if(i == m - 1 && j == n - 1){
+                cout << check[i][j] << endl;
+                goto end;
+            }
+            int k = a[i][j];
+            if(i + k < m && !check[i + k][j]){
+                q.push({i + k, j});
+                check[i + k][j] = check[i][j] + 1;
+            }
+            if(j + k < n && !check[i][j + k]){
+                q.push({i, j + k});
+                check[i][j + k] = check[i][j] + 1;
+            }
+        }
+        cout << -1 << endl;
+        end:;
+    }
+}
