@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+ll Solve(ll a, ll b, string op){
+    if(op == "+") return a + b;
+    else if(op == "-") return a - b;
+    else if(op == "*") return a * b;
+    else return a / b;
+}
+
+int main() {
+    fast();
+    int t; cin >> t;
+    while(t--){
+        int n; cin >> n;
+        stack<ll> st;
+        string s;
+        cin.ignore();
+        getline(cin, s);
+        reverse(all(s));
+        stringstream ss(s);
+        string tmp;
+        while(ss >> tmp){
+            reverse(all(tmp));
+            if(tmp == "+" || tmp == "-" || tmp == "*" || tmp == "/"){
+                ll a = st.top(); st.pop();
+                ll b = st.top(); st.pop();
+                st.push(Solve(a, b, tmp));
+            }else
+                st.push(stoll(tmp));
+        }
+        cout << st.top() << endl;
+    }
+}
