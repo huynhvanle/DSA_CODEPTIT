@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        string s; cin >> s;
+        int n = s.size();
+        bool dp[n][n];
+        reset(dp);
+        int res = 1;
+        for(int leng = 1; leng <= n; leng++){
+            for(int i = 0; i <= n - leng; i++){
+                int j = i + leng - 1;
+                if(s[i] == s[j]){
+                    if(leng <= 2) dp[i][j] = 1;
+                    else dp[i][j] = dp[i + 1][j - 1];
+                }
+                if(dp[i][j]) res = max(res, leng);
+            }
+        }
+        cout << res << endl;
+    }
+}
