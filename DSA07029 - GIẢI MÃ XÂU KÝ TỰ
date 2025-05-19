@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int main() {
+    fast();
+    run(){
+        string s; cin >> s;
+        stack<string> st;
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == ']'){
+                string tmp = "";
+                while(!st.empty() && st.top() != "["){
+                    tmp = st.top() + tmp;
+                    st.pop();
+                }
+                st.pop();
+                string num = "";
+                while(!st.empty() && isdigit(st.top()[0])){
+                    num = st.top() + num;
+                    st.pop();
+                }
+                int repeat = 1;
+                if(!num.empty()) repeat = stoi(num);
+                string repeated = "";
+                while(repeat--)
+                    repeated += tmp;
+                st.push(repeated);
+            }else
+                st.push(string(1, s[i]));
+        }
+        string rs = "";
+        while(!st.empty()) {
+            rs = st.top() + rs;
+            st.pop();
+        }
+        cout << rs << endl;
+    }
+}
