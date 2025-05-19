@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *next;
+};
+
+void listing(node *head){
+    while(head != NULL){
+        cout << head -> data << " ";
+        head = head -> next;
+    }
+}
+
+node *makenode(int x){
+    node *newnode = new node();
+    newnode -> data = x;
+    newnode -> next = NULL;
+    return newnode;
+}
+
+void pushback(node **head, int x){
+    node *newnode = makenode(x);
+    if(*head == NULL){
+        *head = newnode;
+        return;
+    }
+    node *temp = *head;
+    while(temp -> next != NULL){
+        temp = temp -> next;
+    }
+    temp -> next = newnode;
+}
+
+
+
+int main() {
+    fast();
+    node *head = NULL;
+    int n; cin >> n;
+    map<int,bool> mp;
+    for(int i = 0; i < n; i++){
+        int x; cin >> x;
+        if(!mp[x])
+            pushback(&head, x);
+        mp[x] = true;
+    }
+    listing(head);
+}
