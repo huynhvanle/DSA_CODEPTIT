@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    string s; cin >> s;
+    set<string> rs;
+    stack<string> deleting;
+    deleting.push(s);
+    while(!deleting.empty()){
+        string x = deleting.top();
+        deleting.pop();
+        stack<int> id;
+        for(int i = 0; i < x.size(); i++){
+            if(x[i] == '(')
+                id.push(i);
+            else if(x[i] == ')'){
+                string tmp = x;
+                int era = id.top();
+                tmp.erase(i, 1);
+                tmp.erase(era, 1);
+                id.pop();
+                if(!rs.count(tmp)){
+                    deleting.push(tmp);
+                    rs.insert(tmp);
+                }
+            }
+        }
+    }
+    for(string x : rs)
+        cout << x << endl;
+}
