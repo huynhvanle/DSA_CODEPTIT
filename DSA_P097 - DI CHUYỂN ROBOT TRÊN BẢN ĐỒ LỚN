@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int di[8] = {-1, -1, 0, 1, 1, 1, 0, -1};
+int dj[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+
+int main() {
+    fast();
+    run(){
+        ll st1, st2, en1, en2; cin >> st1 >> st2 >> en1 >> en2;
+        ll n; cin >> n;
+        if (st1 == en1 && st2 == en2) {
+            cout << 0 << endl;
+            continue;
+        }
+        map<ll,set<ll>> dsk;
+        while(n--){
+            ll x, y1, y2; cin >> x >> y1 >> y2;
+            for(ll i = y1; i <= y2; i++)
+                dsk[x].insert(i);
+        }
+        queue<pair<pair<ll,ll>,ll>> q;
+        q.push({{st1,st2}, 0});
+        
+        set<pair<ll,ll>> check;
+        check.insert({st1,st2});
+        
+        while(!q.empty()){
+            ll x = q.front().fi.fi;
+            ll y = q.front().fi.se;
+            ll cnt = q.front().se;
+            q.pop();
+            for(int i = 0; i < 8; i++){
+                int in = x + di[i];
+                int jn = y + dj[i];
+                if(in < 0 || jn < 0 || in > 1e9 || jn > 1e9) continue;
+                if(!check.count({in,jn}) && dsk[in].count(jn)){
+                    if(in == en1 && jn == en2){
+                        cout << cnt + 1 << endl;
+                        goto end;
+                    }
+                    check.insert({in,jn});
+                    q.push({{x,y}, cnt});
+                    q.push({{in,jn}, cnt + 1});
+                }
+            }
+        }
+        cout << -1 << endl;
+        end:;
+    }
+}
