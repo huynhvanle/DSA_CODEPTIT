@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        int n; cin >> n;
+        queue<int> q;
+        q.push(n);
+        map<int,int> cnt;
+        cnt[n] = 0;
+        while(!q.empty()){
+            int x = q.front();
+            q.pop();
+            if(x == 1){
+                cout << cnt[1] << endl;
+                break;
+            }
+            int a = 0, b = x - 1;
+            for(int i = sqrt(x); i > 1; i--){
+                if(x % i == 0){
+                    a = max(i, x / i);
+                    if(!cnt[a]){
+                        cnt[a] = cnt[x] + 1;
+                        q.push(a);
+                    }
+                }
+            }
+            if(b > 0 && !cnt[b]){
+                cnt[b] = cnt[x] + 1;
+                q.push(b);
+            }
+        }
+    }
+}
