@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        vector<int> a(6), b(6);
+        for(int i = 0; i < 6; i++) cin >> a[i];
+        for(int i = 0; i < 6; i++) cin >> b[i];
+        queue<pair<vector<int>, int>> q;
+        q.push({a,0});
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            if(top.fi == b){
+                cout << top.se << endl;
+                break;
+            }
+            vector<int> tmp = top.fi;
+            tmp[1] = top.fi[0]; tmp[4] = top.fi[1]; tmp[3] = top.fi[4]; tmp[0] = top.fi[3];
+            q.push({tmp,top.se + 1});
+            tmp = top.fi;
+            tmp[2] = top.fi[1]; tmp[5] = top.fi[2]; tmp[4] = top.fi[5]; tmp[1] = top.fi[4];
+            q.push({tmp,top.se + 1});
+        }
+    }
+}
