@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        int a[n];
+        for(int i = 0; i < n; i++) cin >> a[i];
+        sort(a, a + n, greater<int>());
+        string num;
+        int sum = 0;
+        for(int x : a){
+            num += to_string(x);
+            sum += x;
+        }
+        bool dg = false;
+        if(sum % 3 == 1){
+            for(int i = num.size() - 1; i >= 0; i--){
+                if(num[i] == '1' || num[i] == '4' || num[i] == '7'){
+                    num.erase(i,1);
+                    dg = true;
+                    break;
+                }
+            }
+            if(!dg){
+                int cnt = 2;
+                for(int i = num.size() - 1; i >= 0 && cnt > 0;i--){
+                    if((num[i] - '0') % 3 == 2){
+                        num.erase(i,1);
+                        cnt--;
+                    }
+                }
+                if(cnt == 0)
+                    dg = true;
+            }
+        }else if(sum % 3 == 2){
+            for(int i = num.size() - 1; i >= 0; i--){
+                if(num[i] == '2' || num[i] == '5' || num[i] == '8'){
+                    num.erase(i,1);
+                    dg = true;
+                    break;
+                }
+            }
+            if(!dg){
+                int cnt = 2;
+                for(int i = num.size() - 1; i >= 0 && cnt > 0; i--){
+                    if((num[i] - '0') % 3 == 1){
+                        num.erase(i,1);
+                        cnt--;
+                    }
+                }
+                if(cnt == 0)
+                    dg = true;
+            }
+        }else
+            dg = true;
+        if(!dg || num.empty())
+            cout << -1 << endl;
+        else
+            cout << num << endl;
+    }
+}
