@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+
+int main() {
+    fast();
+    run(){
+        int n, m; cin >> n >> m;
+        int a[n][m];
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)
+                cin >> a[i][j];
+        int rs_all = 0;
+        for(int i = 0; i < n; i++){
+            int high[m];
+            for(int j = 0; j < m; j++){
+                high[j] = 0;
+                for(int k = i; k >= 0; k--){
+                    if(!a[k][j])
+                        break;
+                    else
+                        high[j]++;
+                }
+            }
+            stack<int> st;
+            int rs_row = 0;
+            for(int j = 0; j < m; j++){
+                while(!st.empty() && high[j] < high[st.top()]){
+                    int top = st.top();
+                    st.pop();
+                    if(st.empty()){
+                        rs_row = max(rs_row, high[top] * j);
+                    }else
+                        rs_row = max(rs_row, high[top] * (j - st.top() - 1));
+                }
+                st.push(j);
+            }
+            while(!st.empty()){
+                int top = st.top();
+                st.pop();
+                if(st.empty())
+                    rs_row = max(rs_row, high[top] * m);
+                else
+                    rs_row = max(rs_row, high[top] * (m - st.top() - 1));
+            }
+            rs_all = max(rs_all, rs_row);
+        }
+        cout << rs_all << endl;
+    }
+}
