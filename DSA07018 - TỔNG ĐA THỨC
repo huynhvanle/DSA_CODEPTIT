@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int heso;
+    int somu;
+    node *next;
+};
+
+node *makenode(int x, int y){
+    node *newnode = new node();
+    newnode -> heso = x;
+    newnode -> somu = y;
+    newnode -> next = NULL;
+    return newnode;
+}
+
+void pushback(node **head,int x, int y){
+    node *newnode = makenode(x, y);
+    if(*head == NULL){
+        *head = newnode;
+    }else{
+        node *tmp = *head;
+        while(tmp -> next != NULL)
+            tmp = tmp -> next;
+        tmp -> next = newnode;
+    }
+}
+
+pair<int,int> Find(string s){
+    pair<int,int> rs = {0,0};
+    int i = 0;
+    while(s[i] != '*'){
+        rs.fi = rs.fi * 10 + (s[i] - '0');
+        i++;
+    }
+    i += 3;
+    while(i < s.size()){
+        rs.se = rs.se * 10 + (s[i] - '0');
+        i++;
+    }
+    return rs;
+}
+
+void analysis(node **head, string s){
+    stringstream ss(s);
+    string tmp;
+    while(ss >> tmp){
+        if(tmp == "+") continue;
+        int x = Find(tmp).fi;
+        int y = Find(tmp).se;
+        pushback(head, x, y);
+    }
+}
+
+void Add(node *head1, node *head2, node **ans){
+    while(head1 != NULL && head2 != NULL){
+        if(head1 -> somu > head2 -> somu){
+            pushback(ans, head1 -> heso, head1 -> somu);
+            head1 = head1 -> next;
+        }else if(head1 -> somu < head2 -> somu){
+            pushback(ans, head2 -> heso, head2 -> somu);
+            head2 = head2 -> next;
+        }else{
+            pushback(ans, head1 -> heso + head2 -> heso, head1 -> somu);
+            head1 = head1 -> next;
+            head2 = head2 -> next;
+        }
+    }
+    while(head1 != NULL){
+        pushback(ans, head1 -> heso, head1 -> somu);
+        head1 = head1 -> next;
+    }
+    while(head2 != NULL){
+        pushback(ans, head2 -> heso, head2 -> somu);
+        head2 = head2 -> next;
+    }
+}
+
+void display(node *head){
+    while(head -> next != NULL){
+        cout << head -> heso << "*x^" << head -> somu << " + ";
+        head = head -> next;
+    }
+    cout << head -> heso << "*x^" << head -> somu;
+}
+
+int main(){
+    fast();
+    int t; cin >> t;
+    cin.ignore();
+    while(t--){
+        node *head1 = NULL;
+        node *head2 = NULL;
+        node *ans = NULL;
+        string s1, s2;
+        getline(cin, s1);
+        getline(cin, s2);
+        analysis(&head1, s1);
+        analysis(&head2, s2);
+        Add(head1, head2, &ans);
+        display(ans);
+        cout << endl;
+    }
+}
