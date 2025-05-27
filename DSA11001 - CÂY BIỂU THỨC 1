@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    char data;
+    node *left = NULL;
+    node *right = NULL;
+    node(char data){
+        this -> data = data;
+    }
+};
+class Tree{
+private:
+    node *root;
+    void mid_listing(node *root){
+        if(root != NULL){
+            mid_listing(root -> left);
+            cout << root -> data;
+            mid_listing(root -> right);
+        }
+    }
+public:
+    Tree(node *root){
+        this -> root = root;
+    }
+    void mid_listing() {mid_listing(root);}
+};
+
+int main(){
+    fast();
+    run(){
+        string s; cin >> s;
+        stack<node*> st;
+        for(char c : s){
+            if(isalpha(c)){
+                st.push(new node(c));
+            }else{
+                node *sign = new node(c);
+                sign -> right = st.top(); st.pop();
+                sign -> left = st.top(); st.pop();
+                st.push(sign);
+            }
+        }
+        Tree T(st.top());
+        T.mid_listing();
+        cout << endl;
+    }
+}
