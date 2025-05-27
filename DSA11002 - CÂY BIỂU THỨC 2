@@ -15,7 +15,6 @@ using namespace std;
 bool is_op(const string &s){
     return s == "+" || s == "-" || s == "*" || s == "/";
 }
-
 struct node{
     string data;
     node *left = NULL;
@@ -24,7 +23,6 @@ struct node{
         this->data = data;
     }
 };
-
 class Tree {
 public:
     node *root = NULL;
@@ -36,14 +34,12 @@ public:
         int i = 1;
         while(i < v.size()) {
             node *curr = q.front(); q.pop();
-            if(i < v.size()) {
-                curr->left = v[i++];
-                if(is_op(curr->left->data)) q.push(curr->left);
-            }
-            if(i < v.size()) {
-                curr->right = v[i++];
-                if(is_op(curr->right->data)) q.push(curr->right);
-            }
+            curr->left = v[i++];
+            if(is_op(curr->left->data))
+                q.push(curr->left);
+            curr->right = v[i++];
+            if(is_op(curr->right->data))
+                q.push(curr->right);
         }
     }
     int solve(node *root){
@@ -60,7 +56,6 @@ public:
         return 0;
     }
 };
-
 int main() {
     fast();
     run() {
