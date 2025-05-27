@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *left = NULL;
+    node *right = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+class Tree{
+public:
+    node *root = NULL;
+    void postoder(node *root){
+        if(root == NULL) return;
+        postoder(root -> left);
+        postoder(root -> right);
+        cout << root -> data << " ";
+    }
+};
+int Find(int x, int *in, int st, int end){
+    for(int i = st; i <= end; i++){
+        if(in[i] == x)
+            return i;
+    }
+    return -1;
+}
+node *make_tree(int *in, int *pre, int st, int end, int *pre_index){
+    node *root = NULL;
+    if(st <= end){
+        root = new node(pre[*pre_index]);
+        int mid = Find(pre[*pre_index], in, st, end);
+        (*pre_index)++;
+        root -> left = make_tree(in, pre, st, mid - 1, pre_index);
+        root -> right = make_tree(in, pre, mid + 1, end, pre_index);
+    }
+    return root;
+}
+
+int main() {
+    fast();
+    run() {
+        int n; cin >> n;
+        int in[n], pre[n];
+        for(int i = 0; i < n; i++) cin >> in[i];
+        for(int i = 0; i < n; i++) cin >> pre[i];
+        Tree T;
+        int pre_index = 0;
+        T.root = make_tree(in, pre, 0, n - 1, &pre_index);
+        T.postoder(T.root);
+        cout << endl;
+    }
+}
