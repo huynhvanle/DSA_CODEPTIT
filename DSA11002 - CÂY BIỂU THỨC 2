@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+bool is_op(const string &s){
+    return s == "+" || s == "-" || s == "*" || s == "/";
+}
+
+struct node{
+    string data;
+    node *left = NULL;
+    node *right = NULL;
+    node(string data){
+        this->data = data;
+    }
+};
+
+class Tree {
+public:
+    node *root = NULL;
+    void make_tree(vector<node*> &v) {
+        if(v.empty()) return;
+        root = v[0];
+        queue<node*> q;
+        q.push(root);
+        int i = 1;
+        while(i < v.size()) {
+            node *curr = q.front(); q.pop();
+            if(i < v.size()) {
+                curr->left = v[i++];
+                if(is_op(curr->left->data)) q.push(curr->left);
+            }
+            if(i < v.size()) {
+                curr->right = v[i++];
+                if(is_op(curr->right->data)) q.push(curr->right);
+            }
+        }
+    }
+    int solve(node *root){
+        if(root == NULL) return 0;
+        if(!is_op(root -> data)) return stoi(root -> data);
+        else{
+            int l = solve(root -> left);
+            int r = solve(root -> right);
+            if(root -> data == "+") return l + r;
+            if(root -> data == "-") return l - r;
+            if(root -> data == "*") return l * r;
+            if(root -> data == "/") return l / r;
+        }
+        return 0;
+    }
+};
+
+int main() {
+    fast();
+    run() {
+        int n; cin >> n;
+        vector<node*> v(n);
+        for(int i = 0; i < n; i++) {
+            string s; cin >> s;
+            v[i] = new node(s);
+        }
+        Tree T;
+        T.make_tree(v);
+        cout << T.solve(T.root) << endl;
+    }
+}
