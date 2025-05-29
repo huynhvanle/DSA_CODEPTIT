@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int n, c;
+vector<int> dsk[1000];
+int check[1000];
+
+void dfs(int u){
+    check[u] = 1;
+    for(int v : dsk[u]){
+        if(!check[v])
+            dfs(v);
+    }
+}
+int cnt_lt(){
+    int cnt = 0;
+    for(int i = 1; i <= n; i++){
+        if(!check[i]){
+            cnt++;
+            dfs(i);
+        }
+    }
+    return cnt;
+}
+void Find(){
+    set<int> pillar;
+    int cnt_old = cnt_lt();
+    for(int i = 1; i <= n; i++){
+        reset(check);
+        check[i] = 1;
+        int cnt_new = cnt_lt();
+        if(cnt_new > cnt_old)
+            pillar.insert(i);
+    }
+    for(int x : pillar)
+        cout << x << " ";
+}
+
+
+int main(){
+    run(){
+        reset(check);
+        reset(dsk);
+        cin >> n >> c;
+        for(int i = 0; i < c; i++){
+            int x, y; cin >> x >> y;
+            dsk[x].push_back(y);
+            dsk[y].push_back(x);
+        }
+        Find();
+        cout << endl;
+    }
+}
