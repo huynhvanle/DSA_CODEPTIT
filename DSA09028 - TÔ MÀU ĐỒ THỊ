@@ -26,11 +26,10 @@ bool is_safe(int u, int x){
 bool paint(int u){
     if(u > n) return 1;
     for(int i = 1; i <= m; i++){
-        if(!color[u] && is_safe(u,i)){
+        if(is_safe(u,i)){
             color[u] = i;
             if(paint(u + 1))
                 return true;
-            color[u] = 0;
         }
     }
     return false;
