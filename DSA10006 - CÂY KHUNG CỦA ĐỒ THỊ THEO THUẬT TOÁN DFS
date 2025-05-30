@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define db double
+#define fl float
+#define ll long long
+
+vector<int> dsk[10005];
+int check[10005];
+int n, c, u;
+
+void dfs(int i, vector<pair<int,int>> &khung){
+    check[i] = 1;
+    for(int v : dsk[i]){
+        if(!check[v]){
+            khung.push_back({i,v});
+            dfs(v, khung);
+        }
+    }
+}
+
+int main(){
+    fast();
+    run(){
+        cin >> n >> c >> u;
+        reset(check);
+        reset(dsk);
+        for(int i = 0; i < c; i++){
+            int x, y; cin >> x >> y;
+            dsk[x].push_back(y);
+            dsk[y].push_back(x);
+        }
+        vector<pair<int,int>> khung;
+        dfs(u,khung);
+        if(khung.size() != n - 1) cout << -1 << endl;
+        else{
+            for(auto x : khung)
+                cout << x.fi << " " << x.se << endl;
+        }
+    }
+}
+
