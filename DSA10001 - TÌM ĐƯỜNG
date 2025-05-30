@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define db double
+#define fl float
+#define ll long long
+
+char mt[1000][1000];
+int n, m;
+pair<int,int> st, en;
+bool ok;
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+void Find(int i, int j, int direct, int cnt){
+    if(cnt > 2) return;
+    if(i == en.fi && j == en.se && cnt <= 2){
+        ok = true;
+        return;
+    }
+    if(ok) return;
+    mt[i][j] = '*';
+    for(int k = 0; k < 4; k++){
+        int in = i + dx[k];
+        int jn = j + dy[k];
+        if(in >= 1 && in <= n && jn >= 1 && jn <= m && mt[in][jn] != '*'){
+            if(direct == -1 || k == direct){
+                Find(in, jn, k, cnt);
+            }else if(k != direct){
+                Find(in, jn, k, cnt + 1);
+            }
+        }
+    }
+    mt[i][j] = '.';
+}
+
+int main(){
+    fast();
+    run(){
+        cin >> n >> m;
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= m; j++){
+                cin >> mt[i][j];
+                if(mt[i][j] == 'S'){
+                    st.fi = i;
+                    st.se = j;
+                }
+                if(mt[i][j] == 'T'){
+                    en.fi = i;
+                    en.se = j;
+                }
+            }
+        }
+        ok = false;
+        Find(st.fi, st.se, -1, 0);
+        if(ok) cout << "YES" << endl;
+        else cout << "NO" << endl;
+    }
+}
+
