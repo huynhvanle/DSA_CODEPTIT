@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define db double
+#define fl float
+#define ll long long
+
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+int n, k, m;
+int mt[101][101];
+vector<int> dsk[100001];
+set<pair<pair<int,int>, pair<int,int>>> ban;
+int father[100001];
+vector<pair<int,int>> sheep;
+
+void check(){
+    for(int i = 1; i <= n * n; i++){
+        if(!father[i]){
+            queue<int> q;
+            q.push(i);
+            father[i] = i;
+            while(!q.empty()){
+                int u = q.front(); q.pop();
+                for(int v : dsk[u]){
+                    if(!father[v]){
+                        father[v] = father[u];
+                        q.push(v);
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main(){
+    fast();
+    cin >> n >> k >> m;
+    int st = 1;
+    for(int i = 1; i <= n; i++)
+        for(int j = 1; j <= n; j++)
+            mt[i][j] = st++;
+    for(int i = 0; i < m; i++){
+        int u, v, x, y;
+        cin >> u >> v >> x >> y;
+        ban.insert({{u,v},{x,y}});
+        ban.insert({{x,y},{u,v}});
+    }
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= n; j++){
+            int goc = mt[i][j];
+            for(int k = 0; k < 4; k++){
+                int in = i + dx[k];
+                int jn = j + dy[k];
+                if(in >= 1 && jn >= 1 && in <= n && jn <= n && !ban.count({{i,j},{in,jn}}))
+                    dsk[mt[i][j]].push_back(mt[in][jn]);
+            }
+        }
+    }
+    check();
+    int cnt = 0;
+    for(int i = 0; i < k; i++){
+        int u, v; cin >> u >> v;
+        for(auto x : sheep){
+            if(father[mt[u][v]] != father[mt[x.fi][x.se]])
+                cnt++;
+        }
+        sheep.push_back({u,v});
+    }
+    cout << cnt;
+}
