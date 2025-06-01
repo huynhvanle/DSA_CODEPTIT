@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define db double
+#define fl float
+#define ll long long
+
+struct edge{
+    int x, y;
+};
+
+vector<edge> dsc;
+int n, c;
+int par[1000];
+int level[1000];
+bool ok;
+
+int find(int u){
+    if(u == par[u]) return u;
+    return par[u] = find(par[u]);
+}
+
+void dsu(int a, int b){
+    if(ok) return;
+    int para = find(a), parb = find(b);
+    if(para == parb){
+        if(para != a) ok = true;
+        return;
+    }
+    if(level[para] < level[parb]) swap(para,parb);
+    par[parb] = para;
+    level[para] += level[parb];
+}
+
+int main(){
+    fast();
+    run(){
+        cin >> n >> c;
+        dsc.clear();
+        for(int i = 0; i < c; i++){
+            edge tmp;
+            cin >> tmp.x >> tmp.y;
+            dsc.push_back(tmp);
+        }
+        for(int i = 1; i < n; i++){
+            par[i] = i;
+            level[i] = 1;
+        }
+        ok = false;
+        for(edge a : dsc) dsu(a.x, a.y);
+        if(ok) cout << "YES" << endl;
+        else cout << "NO" << endl;
+    }
+}
