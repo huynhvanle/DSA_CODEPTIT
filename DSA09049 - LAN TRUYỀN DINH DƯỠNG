@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define db double
+#define fl float
+#define ll long long
+
+int n;
+ll level[200001];
+ll nutri[200001];
+vector<int> dsk[200001];
+
+ll sum_level(int u){
+    for(int v : dsk[u]){
+        level[u] += sum_level(v);
+    }
+    return level[u];
+}
+
+ll sum_nutri(int u){
+    for(int v : dsk[u]){
+        nutri[u] += (level[v] + sum_nutri(v));
+    }
+    return nutri[u];
+}
+
+int main(){
+    fast();
+    cin >> n;
+    for(int i = 2; i <= n; i++){
+        int x; cin >> x;
+        dsk[x].push_back(i);
+    }
+    for(int i = 1; i <= n; i++)
+        level[i] = nutri[i] = 1;
+    sum_level(1);
+    sum_nutri(1);
+    for(int i = 1; i <= n; i++)
+        cout << nutri[i] << " ";
+}
