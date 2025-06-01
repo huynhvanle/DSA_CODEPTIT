@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *left = NULL;
+    node *right = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+
+struct Tree{
+    node *root = NULL;
+    
+    void add_left(node *root, int val, int x){
+        if(root == NULL) return;
+        if(root -> data == val){
+            if(root -> left == NULL){
+                root -> left = new node(x);
+                return;
+            }
+        }
+        add_left(root -> left, val, x);
+        add_left(root -> right, val, x);
+    }
+    void add_right(node *root, int val, int x){
+        if(root == NULL) return;
+        if(root -> data == val){
+            if(root -> right == NULL){
+                root -> right = new node(x);
+                return;
+            }
+        }
+        add_right(root -> left, val, x);
+        add_right(root -> right, val, x);
+    }
+    void level_list(node *root){
+        if(root == NULL) return;
+        queue<node*> q;
+        q.push(root);
+        while(!q.empty()){
+            auto top = q.front(); q.pop();
+            cout << top -> data << " ";
+            if(top -> left != NULL) q.push(top -> left);
+            if(top -> right != NULL) q.push(top -> right);
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    fast();
+    run() {
+        int n; cin >> n;
+        Tree T;
+        for(int i = 0; i < n; i++){
+            int par, x;
+            char direc;
+            cin >> par >> x >> direc;
+            if(T.root == NULL){
+                T.root = new node(par);
+            }
+            if(direc == 'L')
+                T.add_left(T.root, par, x);
+            else if(direc == 'R')
+                T.add_right(T.root, par, x);
+        }
+        T.level_list(T.root);
+    }
+}
