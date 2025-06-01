@@ -1,0 +1,91 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define db double
+#define fl float
+#define ll long long
+
+
+int level(string x){
+    if(x == "*" || x == "/") return 2;
+    else if(x == "+" || x == "-") return 1;
+    else return 0;
+}
+
+ll caculate(string a, string b, string op){
+    if(op == "+") return stoll(a) + stoll(b);
+    if(op == "-") return stoll(a) - stoll(b);
+    if(op == "*") return stoll(a) * stoll(b);
+    if(op == "/") return stoll(a) / stoll(b);
+}
+
+string change(string s){
+    stringstream ss(s);
+    string tmp;
+    stack<string> st;
+    string rs;
+    while(ss >> tmp){
+        if(level(tmp) > 0){
+            while(!st.empty() && level(st.top()) >= level(tmp)){
+                rs += (st.top() + " ");
+                st.pop();
+            }
+            st.push(tmp);
+        }else
+            rs += tmp + " ";
+    }
+    while(!st.empty()){
+      rs += st.top() + " ";
+      st.pop();
+    }
+    return rs;
+}
+
+string processing(string s){
+    string tmp;
+    for(int i = 0; i < s.size(); i++){
+        if(level(string(1,s[i])) > 0)
+            tmp += " " + string(1,s[i]) + " ";
+        else
+            tmp += string(1,s[i]);
+    }
+    s = change(tmp);
+    stringstream ss(s);
+    stack<string> st;
+    while(ss >> tmp){
+        if(level(tmp) > 0){
+            string b = st.top(); st.pop();
+            string a = st.top(); st.pop();
+            st.push(to_string(caculate(a, b, tmp)));
+        }else
+            st.push(tmp);
+    }
+    return st.top();
+}
+
+int main(){
+    fast();
+    run(){
+        string s; cin >> s;
+        stack<char> st;          // luu vi tri dau ngoac
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '(')
+                st.push(i);
+            else if(s[i] == ')'){
+                int open = st.top(); st.pop();
+                string tmp = s.substr(open + 1, i - open - 1);
+                tmp = processing(tmp);
+                s.replace(open,i - open + 1,tmp);
+                i = open + tmp.size() - 1;
+            }
+        }
+        cout << processing(s) << endl;
+    }
+}
