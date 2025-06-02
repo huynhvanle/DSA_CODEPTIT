@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+#include<algorithm>
+#include<cstring>
+#include<stack>
+#include<vector>
+#include<queue>
+#include<set>
+#include<climits>
+#include<map>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        char a[n][n];
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++)
+                cin >> a[i][j];
+        int u, v, x, y;
+        cin >> u >> v >> x >> y;
+        queue<pair<int,int>> q;
+        q.push({u,v});
+        int check[n][n];
+        reset(check);
+        check[u][v] = 1;
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            if(check[x][y]) break;
+            // di xuong
+            for(int i = top.fi + 1; i < n; i++){
+                if(a[i][top.se] == 'X') break;
+                if(!check[i][top.se]){
+                    q.push({i,top.se});
+                    check[i][top.se] = check[top.fi][top.se] + 1;
+                }
+            }
+            // di len
+            for(int i = top.fi - 1; i >= 0; i--){
+                if(a[i][top.se] == 'X') break;
+                if(a[i][top.se] != 'X' && !check[i][top.se]){
+                    q.push({i,top.se});
+                    check[i][top.se] = check[top.fi][top.se] + 1;
+                }
+            }
+           // sang phai
+            for(int i = top.se + 1; i < n; i++){
+                if(a[top.fi][i] == 'X') break;
+                if(a[top.fi][i] != 'X' && !check[top.fi][i]){
+                    q.push({top.fi,i});
+                    check[top.fi][i] = check[top.fi][top.se] + 1;
+                }
+            }
+            // sang trai
+            for(int i = top.se - 1; i >= 0; i--){
+                if(a[top.fi][i] == 'X') break;
+                if(a[top.fi][i] != 'X' && !check[top.fi][i]){
+                    q.push({top.fi,i});
+                    check[top.fi][i] = check[top.fi][top.se] + 1;
+                }
+            }
+        }
+        cout << check[x][y] - 1 << endl;
+    }
+}
