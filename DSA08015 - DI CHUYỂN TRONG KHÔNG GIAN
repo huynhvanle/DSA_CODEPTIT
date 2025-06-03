@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int dx[6] = {1, -1, 0, 0, 0, 0};
+int dy[6] = {0, 0, 1, -1, 0, 0};
+int dz[6] = {0, 0, 0, 0, 1, -1};
+
+int main(){
+    fast();
+    run(){
+        int a, b, c; cin >> a >> b >> c;
+        char kg[a][b][c];
+        int st1, st2, st3;
+        int end1, end2, end3;
+        for(int i = 0; i < a; i++){
+            for(int j = 0; j < b; j++){
+                for(int k = 0; k < c; k++){
+                    cin >> kg[i][j][k];
+                    if(kg[i][j][k] == 'S'){
+                        st1 = i, st2 = j, st3 = k;
+                    }else if(kg[i][j][k] == 'E'){
+                        end1 = i, end2 = j, end3 = k;
+                    }
+                }
+            }
+        }
+        int time[a][b][c];
+        reset(time);
+        queue<tuple<int,int,int>> q;
+        q.push({st1,st2,st3});
+        time[st1][st2][st3] = 1;
+        while(!q.empty()){
+            auto [x, y, z] = q.front(); q.pop();
+            if(time[end1][end2][end3]) break;
+            for(int i = 0; i < 6; i++){
+                int in = x + dx[i];
+                int jn = y + dy[i];
+                int kn = z + dz[i];
+                if(in >= 0 && jn >= 0 && kn >= 0 && in < a && jn < b && kn < c && kg[in][jn][kn] != '#' && !time[in][jn][kn]){
+                    q.push({in,jn,kn});
+                    time[in][jn][kn] = time[x][y][z] + 1;
+                }
+            }
+        }
+        cout << time[end1][end2][end3] - 1 << endl;
+    }
+}
