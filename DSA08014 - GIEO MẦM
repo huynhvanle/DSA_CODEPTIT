@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+int main(){
+    fast();
+    run(){
+        int r, c; cin >> r >> c;
+        int a[r][c];
+        queue<pair<int,int>> q;
+        for(int i = 0; i < r; i++){
+            for(int j = 0; j < c; j++){
+                cin >> a[i][j];
+                if(a[i][j] == 2)
+                    q.push({i,j});
+            }
+        }
+        int cnt = 0;
+        int days[r][c];
+        reset(days);
+        while(!q.empty()){
+            auto[x, y] = q.front(); q.pop();
+            for(int k = 0; k < 4; k++){
+                int in = x + dx[k];
+                int jn = y + dy[k];
+                if(in >= 0 && in < r && jn >= 0 && jn < c && a[in][jn] == 1){
+                    days[in][jn] = days[x][y] + 1;
+                    a[in][jn] = 2;
+                    cnt = max(cnt, days[in][jn]);
+                    q.push({in,jn});
+                }
+            }
+        }
+        for(int i = 0; i < r; i++){
+            for(int j = 0; j < c; j++){
+                if(a[i][j] == 1){
+                    cnt = -1;
+                    break;
+                }
+            }
+        }
+        cout << cnt << endl;
+    }
+}
