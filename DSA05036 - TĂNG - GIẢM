@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        db a[n], b[n];
+        int dp[n];
+        for(int i = 0; i < n; i++){
+            cin >> a[i] >> b[i];
+            dp[i] = 1;
+        }
+        for(int i = 1; i < n; i++){
+            for(int j = 0; j < i; j++){
+                if(a[i] > a[j] && b[i] < b[j])
+                    dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+        cout << *max_element(dp, dp + n) << endl;
+    }
+}
