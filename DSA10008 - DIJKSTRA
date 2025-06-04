@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+vector<pair<int,int>> dsk[1005];
+int check[1005];
+int n, c, st;
+
+void dijkstra(int s){
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> q;
+    q.push({0,s});
+    vector<int> d(n + 1, 1e9);
+    d[s] = 0;
+    reset(check);
+    while(!q.empty()){
+        auto [ts, u] = q.top(); q.pop();
+        if(check[u]) continue;
+        check[u] = 1;
+        for(auto [w, v] : dsk[u]){
+            if(d[u] + w < d[v]){
+                d[v] = d[u] + w;
+                q.push({d[v], v});
+            }
+        }
+    }
+    for(int i = 1; i <= n; i++)
+        cout << d[i] << " ";
+}
+
+int main(){
+    fast();
+    run(){
+        cin >> n >> c >> st;
+        reset(dsk);
+        for(int i = 0; i < c; i++){
+            int x, y, w;
+            cin >> x >> y >> w;
+            dsk[x].push_back({w,y});
+            dsk[y].push_back({w,x});
+        }
+        dijkstra(st);
+        cout << endl;
+    }
+}
