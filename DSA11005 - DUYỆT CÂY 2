@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *left = NULL;
+    node *right = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+
+struct tree{
+    node *root = NULL;
+    
+    int Find(vector<int> &in, int data){
+        for(int i = 0; i < in.size(); i++)
+            if(in[i] == data)
+                  return i;
+        return -1;
+    }
+    
+    node * make_tree(vector<int> &in, vector<int> &level, int n){
+        if(n == 0) return NULL;
+        node *root = new node(level[0]);
+        if(n == 1) return root;
+        int mid = Find(in, level[0]);
+        vector<int> in_left(in.begin(), in.begin() + mid);
+        vector<int> in_right(in.begin() + mid + 1, in.end());
+        
+        unordered_set<int> s_left(in_left.begin(), in_left.end());
+        unordered_set<int> s_right(in_right.begin(), in_right.end());
+        
+        vector<int> level_left, level_right;
+        for (int i = 1; i < level.size(); i++) {
+            if (s_left.count(level[i])) level_left.push_back(level[i]);
+            else if (s_right.count(level[i])) level_right.push_back(level[i]);
+        }
+        root -> left = make_tree(in_left, level_left, level_left.size());
+        root -> right = make_tree(in_right, level_right, level_right.size());
+        return root;
+    }
+    void postoder(node *root){
+        if(!root) return;
+        postoder(root -> left);
+        postoder(root -> right);
+        cout << root -> data << " ";
+    }
+};
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        vector<int> in(n), level(n);
+        for(int i = 0; i < n; i++) cin >> in[i];
+        for(int i = 0; i < n; i++) cin >> level[i];
+        tree t;
+        t.root = t.make_tree(in, level, n);
+        t.postoder(t.root);
+        cout << endl;
+    }
+}
