@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+int n, c;
+int mtk[1000][1000];
+int d[1000][1000];
+
+void floyd(){
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= n; j++){
+            d[i][j] = mtk[i][j];
+        }
+    }
+    for(int k = 1; k <= n; k++){
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= n; j++){
+                if(d[i][j] > d[i][k] + d[k][j]){
+                    d[i][j] = d[i][k] + d[k][j];
+                }
+            }
+        }
+    }
+}
+
+int main(){
+    fast();
+    cin >> n >> c;
+    for(int i = 1; i <= n; i++){
+      for(int j = 1; j <= n; j++){
+        if(i == j) mtk[i][j] = 0;
+        else mtk[i][j] = 1e5;
+      }
+    }
+    for(int i = 0; i < c; i++){
+        int x, y, w;
+        cin >> x >> y >> w;
+        mtk[x][y] = w;
+        mtk[y][x] = w;
+    }
+    int q; cin >> q;
+    floyd();
+    while(q--){
+        int s, t; cin >> s >> t;
+        cout << d[s][t] << endl;
+    }
+}
