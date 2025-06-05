@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *left = NULL;
+    node *right = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+
+struct tree{
+    node *root = NULL;
+    
+    void add(node *root, int par, int x, char dir){
+        if(root == NULL) return;
+        if(dir == 'L'){
+            if(root -> data == par && root -> left == NULL){
+                root -> left = new node(x);
+                return;
+            }
+        }else if(dir == 'R'){
+            if(root -> data == par && root -> right == NULL){
+                root -> right = new node(x);
+                return;
+            }
+        }
+        add(root -> left, par, x, dir);
+        add(root -> right, par, x, dir);
+    }
+    
+    void spiral_list(node * root){
+        if(root == NULL) return;
+        stack<node*> s1,s2;
+        s1.push(root);
+        while(!s1.empty() || !s2.empty()){
+            while(!s1.empty()){
+                node *top = s1.top();
+                s1.pop();
+                cout << top -> data << " ";
+                if(top -> right != NULL) s2.push(top -> right);
+                if(top -> left != NULL) s2.push(top -> left);
+            }
+            while(!s2.empty()){
+                node *top = s2.top();
+                s2.pop();
+                cout << top -> data << " ";
+                if(top -> left != NULL) s1.push(top -> left);
+                if(top -> right != NULL) s1.push(top -> right);
+            }
+        }
+    }
+};
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        tree T;
+        for(int i = 0; i < n; i++){
+            int par, x; char c;
+            cin >> par >> x >> c;
+            if(T.root == NULL) T.root = new node(par);
+            T.add(T.root, par, x, c);
+        }
+        set<int> s;
+        T.spiral_list(T.root);
+        cout << endl;
+    }
+}
