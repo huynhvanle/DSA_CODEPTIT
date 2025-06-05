@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *right = NULL;
+    node *left = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+
+struct tree{
+    node *root = NULL;
+    
+    node *make_tree(int *pre, int *in, int st, int en, int *i){
+        node *root = NULL;
+        if(st <= en){
+            root = new node(pre[(*i)++]);
+            int mid = find(in + st, in + en + 1, root -> data) - in;
+            root -> left = make_tree(pre, in, st, mid - 1, i);
+            root -> right = make_tree(pre, in, mid + 1, en, i);
+        }
+        return root;
+    }
+    
+    void leaf(node * root, set<int> &s){
+        if(!root) return;
+        if(!root -> right && !root -> left)
+            s.insert(root -> data);
+        leaf(root -> left, s);
+        leaf(root -> right, s);
+    }
+};
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        int pre[n], in[n];
+        for(int i = 0; i < n; i++){
+            cin >> pre[i];
+            in[i] = pre[i];
+        }
+        sort(in, in + n);
+        tree t;
+        int i = 0;
+        t.root = t.make_tree(pre,in,0,n - 1,&i);
+        set<int>s;
+        t.leaf(t.root,s);
+        for(int x : s)
+            cout << x << " ";
+        cout << endl;
+    }
+}
