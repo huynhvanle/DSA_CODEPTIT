@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *left = NULL;
+    node *right = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+
+struct tree{
+    node *root = NULL;
+    
+    void add(node *root, int par, int x, char dir){
+        if(root == NULL) return;
+        if(dir == 'L'){
+            if(root -> data == par && root -> left == NULL){
+                root -> left = new node(x);
+                return;
+            }
+        }else if(dir == 'R'){
+            if(root -> data == par && root -> right == NULL){
+                root -> right = new node(x);
+                return;
+            }
+        }
+        add(root -> left, par, x, dir);
+        add(root -> right, par, x, dir);
+    }
+    bool check(node *root){
+        if(root == NULL) return 1;
+        if((root -> right != NULL && root -> left == NULL) || (root -> right == NULL && root -> left != NULL))
+            return 0;
+        if(check(root -> right) && check(root -> left))
+           return 1;
+        return 0;
+    }
+    int level(node *root, set<int> &s, int d){
+        if(root == NULL) return 0;
+        int cnt = 0;
+        if(root -> left == NULL && root -> right == NULL){
+            if(!s.count(d)){
+                s.insert(d);
+                return 1;
+            }
+        }
+        cnt += level(root -> left, s, d + 1);
+        cnt += level(root -> right, s, d + 1);
+        return cnt;
+    }
+};
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        tree T;
+        for(int i = 0; i < n; i++){
+            int par, x; char c;
+            cin >> par >> x >> c;
+            if(T.root == NULL) T.root = new node(par);
+            T.add(T.root, par, x, c);
+        }
+        set<int> s;
+        if(T.check(T.root) && T.level(T.root, s, 0) == 1)
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
+    }
+}
