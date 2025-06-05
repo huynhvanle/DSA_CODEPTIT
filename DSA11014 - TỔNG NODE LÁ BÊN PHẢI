@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MOD 1000000007
+#define run() int t; cin >> t; while(t--)
+#define fast() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(x) x.begin(), x.end()
+#define reset(x) memset(x, 0, sizeof(x))
+#define fi first
+#define se second
+#define ll long long
+#define db double
+#define fl float
+
+struct node{
+    int data;
+    node *left = NULL;
+    node *right = NULL;
+    node(int data){
+        this -> data = data;
+    }
+};
+
+struct tree{
+    node *root = NULL;
+    unordered_map<int,node*> nodes;
+    
+    void add(int par, int x, char dir){
+        if(nodes.find(par) == nodes.end()){
+            nodes[par] = new node(par);
+            if(!root) root = nodes[par];
+        }
+        node *child = new node(x);
+        node *parent = nodes[par];
+        nodes[x] = child;
+        if(dir == 'R')
+            parent -> right = child;
+        else
+            parent -> left = child;
+    }
+    int sum_right(node *root, bool right){
+        if(root == NULL) return 0;
+        int sum = 0;
+        if(root -> left == NULL && root -> right == NULL && right)
+            return root -> data;
+        sum += sum_right(root -> left, false);
+        sum += sum_right(root -> right, true);
+        return sum;
+    }
+    
+};
+
+int main(){
+    fast();
+    run(){
+        int n; cin >> n;
+        tree t;
+        for(int i = 0; i < n; i++){
+            int par, x; char dir;
+            cin >> par >> x >> dir;
+            t.add(par, x, dir);
+        }
+        cout << t.sum_right(t.root,0) << endl;
+    }
+}
